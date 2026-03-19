@@ -5,7 +5,7 @@ LINUX_VERSION = 6.18.6
 LINUX         = linux-$(LINUX_VERSION)
 LINUX_TARBALL = $(LINUX).tar.xz
 LINUX_LINK    = https://cdn.kernel.org/pub/linux/kernel/v6.x/$(LINUX_TARBALL)
-LINUX_BZIMAGE = $(LINUX)/arch/x86_64/boot/bzImage
+LINUX_BZIMAGE = $(LINUX)/arch/x86/boot/bzImage
 
 .PHONY: all linux systemd symlink detach-rootfs.img
 
@@ -29,7 +29,7 @@ configure-linux:
 	make -j$(CPUS) -C $(LINUX) defconfig
 
 compile-linux:
-    make -C $(LINUX) -j$(CPUS) 2>&1 | tee kernel-build.log
+	make -C $(LINUX) -j$(CPUS) 2>&1 | tee kernel-build.log
 
 systemd: download-systemd systemd-untar systemd-build
 
@@ -39,7 +39,7 @@ download-systemd:
 	fi
 
 systemd-untar:
-	if [ ! -f systemd-259 ]; then \
+	if [ ! -d systemd-259 ]; then \
 		tar -xvf v259.tar.gz; \
 	fi
 
@@ -49,10 +49,10 @@ systemd-build:
 	sudo DESTDIR=/mnt ninja -C ./systemd-259/build install
 
 symlink:
-	sudo ln -s /mnt/usr/bin /mnt/bin
-	sudo ln -s /mnt/usr/sbin /mnt/sbin
-	sudo ln -s /mnt/usr/lib /mnt/lib
-	sudo ln -s /mnt/usr/lib64 /mnt/lib64
+	sudo ln -sf /mnt/usr/bin /mnt/bin
+	sudo ln -sf /mnt/usr/sbin /mnt/sbin
+	sudo ln -sf /mnt/usr/lib /mnt/lib
+	sudo ln -sf /mnt/usr/lib64 /mnt/lib64
 
 DISK      = rootfs.img
 DISK_SIZE = 16G
@@ -68,21 +68,25 @@ setup-$(DISK): $(DISK)
 
 format-$(DISK): setup-$(DISK)
 	LOOPDEV=$$(cat .loopdev); \
-	sudo parted -s $$LOOPDEV mklabel gpt
-	sudo parted -s $$LOOPDEV mkpart primary ext4 0% 100%
-	yes | sudo mkfs.ext4 /dev/loop0p1
+	sudo parted -s $$LOOPDEV mklabel gpt; \
+	sudo parted -s $$LOOPDEV mkpart primary ext4 0% 100%; \
+	yes | sudo mkfs.ext4 $${LOOPDEV}p1
 
 mount-$(DISK): setup-$(DISK)
 	LOOPDEV=$$(cat .loopdev); \
-	sudo mount $$LOOPDEV /mnt
+	sudo mount $${LOOPDEV}p1 /mnt
 
 unmount-$(DISK):
 	sync
 	sudo umount /mnt
 
-detach-$(DISK): unmount-$(DISK)
+detach-rootfs.img: unmount-rootfs.img
 	LOOPDEV=$$(cat .loopdev); \
 	sudo losetup -d $$LOOPDEV
 
 run:
-	qemu-system-x86_64 -kernel $(LINUX_BZIMAGE) -hda rootfs.img -append "init=/lib/systemd/systemd root=/dev/sda1 console=ttyS0" -nographic
+	qemu-system-x86_64 \
+		-kernel $(LINUX_BZIMAGE) \
+		-drive file=rootfs.img,format=raw \
+		-append "init=/lib/systemd/systemd root=/dev/sda1 console=ttyS0" \
+		-nographic
