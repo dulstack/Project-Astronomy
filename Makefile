@@ -16,23 +16,20 @@ symlink:
 	 ln -sf usr/lib lib;\
 	 ln -sf usr/lib64 lib64
 
-DISK = $(OUT)/rootfs.img
-DISK_SIZE = 128M
+RAMDISK = $(OUT)/initrd.cpio.gz
 
-disk: format-$(DISK)
+disk: $(RAMDISK)
 
-$(DISK):
-	qemu-img create -f raw $(DISK) $(DISK_SIZE)
-
-format-$(DISK): $(DISK) | $(OUT)
-	fakeroot /sbin/mke2fs -d $(OUT)/mnt -t ext4 $(DISK) $(DISK_SIZE) 
-
+$(RAMDISK): $(OUT)/mnt
+	cd $(OUT)/mnt;\
+	 fakeroot find . | fakeroot cpio -o -H newc | gzip > $(PWD)/$(RAMDISK)
 
 run:
 	qemu-system-x86_64 \
+		-cpu host \
 		-kernel $(LINUX_BZIMAGE) \
-		-drive file=$(OUT)/rootfs.img,format=raw \
-		-append "init=/sbin/init root=/dev/sda console=ttyS0" \
+		-initrd  $(RAMDISK)\
+		-append "rdinit=/sbin/init console=ttyS0" \
 		-serial stdio \
 		-display none \
 		--enable-kvm
