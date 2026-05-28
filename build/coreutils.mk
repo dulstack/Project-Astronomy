@@ -1,7 +1,7 @@
 .PHONY: coreutils coreutils-download coreutils-untar coreutils-configure coreutils-build coreutils-install
 
 COREUTILS_VERSION ?= 9.11
-COREUTILS_TARBALL  = download/coreutils-$(COREUTILS_VERSION).tar.xz
+COREUTILS_TARBALL  = coreutils-$(COREUTILS_VERSION).tar.xz
 COREUTILS_URL      = https://ftp.gnu.org/gnu/coreutils/$(COREUTILS_TARBALL)
 COREUTILS          = coreutils-$(COREUTILS_VERSION)
 

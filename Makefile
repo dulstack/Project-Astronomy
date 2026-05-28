@@ -11,6 +11,7 @@ download-all: download-linux download-systemd download-coreutils
 include build/linux.mk
 include build/systemd.mk
 include build/coreutils.mk
+include build/bash.mk
 
 symlink:
 	cd $(OUT)/mnt;\
@@ -32,7 +33,7 @@ run:
 		-cpu host \
 		-kernel $(LINUX_BZIMAGE) \
 		-initrd  $(RAMDISK) \
-		-append "rdinit=/sbin/init console=ttyS0 root=/dev/ram0 raid=noautodetect" \
+		-append "rdinit=/bin/bash console=ttyS0 raid=noautodetect" \
 		-m 1G \
 		-serial stdio \
 		-display none \
@@ -43,4 +44,13 @@ $(OUT)/mnt:
 	cd $(OUT)/mnt ;\
 	 cp /lib64/ld-linux-x86-64.so.2 usr/lib64/;\
 	 cp /lib/x86_64-linux-gnu/libc.so.6 usr/lib/x86_64-linux-gnu/;\
-	 cp /lib/x86_64-linux-gnu/libm.so.6 usr/lib/x86_64-linux-gnu/
+	 cp /lib/x86_64-linux-gnu/libm.so.6 usr/lib/x86_64-linux-gnu/;\
+	 cp /lib/x86_64-linux-gnu/libcrypt.so.1 usr/lib/x86_64-linux-gnu/;\
+	 cp /lib/x86_64-linux-gnu/libcrypto.so.3 usr/lib/x86_64-linux-gnu/;\
+	 cp /lib/x86_64-linux-gnu/libz.so.1 usr/lib/x86_64-linux-gnu/;\
+	 cp /lib/x86_64-linux-gnu/libzstd.so.1 usr/lib/x86_64-linux-gnu/;\
+	 cp /lib/x86_64-linux-gnu/libselinux.so.1 usr/lib/x86_64-linux-gnu/;\
+	 cp /lib/x86_64-linux-gnu/libcap.so.2 usr/lib/x86_64-linux-gnu/;\
+	 cp /lib/x86_64-linux-gnu/libpcre2-8.so.0 usr/lib/x86_64-linux-gnu/;\
+	 cp /lib/x86_64-linux-gnu/libtinfo.so.6 usr/lib/x86_64-linux-gnu/
+
