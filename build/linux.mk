@@ -8,23 +8,24 @@ LINUX_BZIMAGE = $(OUT)/$(LINUX)/arch/x86_64/boot/bzImage
 
 linux: download-linux untar-linux configure-linux compile-linux
 
-linux-nocompile: download-linux untar-linux configure-linux
 
-download-linux:
-	cd $(OUT);\
-	if [ ! -f $(LINUX_TARBALL) ]; then \
-		wget $(LINUX_LINK); \
-	fi
+download-linux: $(OUT)/.downloaded_stamp
+untar-linux: $(OUT)/.unpacked_stamp
+configure-linux: $(OUT)/.configured_stamp
+compile-linux:  $(OUT)/.compiled_stamp
 
-untar-linux:
-	cd $(OUT);\
-	if [ ! -d $(LINUX) ]; then \
-		tar -xvf $(LINUX_TARBALL); \
-	fi
+$(OUT)/.downloaded_stamp:
+	wget -O $(OUT)/$(LINUX_TARBALL) $(LINUX_LINK)
+	touch $@
 
-configure-linux:
+$(OUT)/.unpacked_stamp: $(OUT)/.downloaded_stamp
+	tar -xf $(LINUX_TARBALL) -C $(OUT)
+	touch $@
+
+$(OUT)/.configured_stamp: $(OUT)/.unpacked_stamp
 	make -j$(CPUS) -C $(OUT)/$(LINUX) defconfig
+	touch $@
 
-compile-linux:
+$(OUT)/.compiled_stamp: $(OUT)/.configured_stamp
 	make -C $(OUT)/$(LINUX) -j$(CPUS) 2>&1 | tee $(OUT)/kernel-build.log
-
+	touch $@
