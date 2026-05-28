@@ -14,10 +14,10 @@ coreutils-build: $(OUT)/.built_coreutils_stamp
 coreutils-install: $(OUT)/.installed_coreutils_stamp
 
 
-$(OUT)/.downloaded_coreutils_stamp: $(OUT)/$(COREUTILS_TARBALL)
+$(OUT)/.downloaded_coreutils_stamp: $(OUT)/download/$(COREUTILS_TARBALL)
 	touch $@
 $(OUT)/.unpacked_coreutils_stamp: $(OUT)/.downloaded_coreutils_stamp
-	tar -xf $(OUT)/$(COREUTILS_TARBALL) -C $(OUT)
+	tar -xf $(OUT)/download/$(COREUTILS_TARBALL) -C $(OUT)
 	touch $@
 $(OUT)/.configured_coreutils_stamp: $(OUT)/.unpacked_coreutils_stamp
 	mkdir -p $(OUT)/$(COREUTILS)/out
@@ -34,7 +34,7 @@ $(OUT)/.installed_coreutils_stamp: $(OUT)/.built_coreutils_stamp
 	make -C $(OUT)/$(COREUTILS)/out install
 	touch $@
 
-$(OUT)/$(COREUTILS_TARBALL): $(OUT)
+$(OUT)/download/$(COREUTILS_TARBALL): $(OUT)
 	if [ ! -f $@ ] && [ ! -d $(OUT)/$(COREUTILS) ]; then\
 		wget -O $@ $(COREUTILS_URL);\
 	fi

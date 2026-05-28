@@ -2,7 +2,7 @@
 
 LINUX_VERSION = 6.18.6
 LINUX         = linux-$(LINUX_VERSION)
-LINUX_TARBALL = download/$(LINUX).tar.xz
+LINUX_TARBALL = $(LINUX).tar.xz
 LINUX_LINK    = https://cdn.kernel.org/pub/linux/kernel/v6.x/$(LINUX_TARBALL)
 LINUX_BZIMAGE = $(OUT)/$(LINUX)/arch/x86_64/boot/bzImage
 
@@ -15,11 +15,11 @@ configure-linux: $(OUT)/.configured_stamp
 compile-linux:  $(OUT)/.compiled_stamp
 
 $(OUT)/.downloaded_stamp:
-	wget -O $(OUT)/$(LINUX_TARBALL) $(LINUX_LINK)
+	wget -O $(OUT)/download/$(LINUX_TARBALL) $(LINUX_LINK)
 	touch $@
 
 $(OUT)/.unpacked_stamp: $(OUT)/.downloaded_stamp
-	tar -xf $(OUT)/$(LINUX_TARBALL) -C $(OUT)
+	tar -xf $(OUT)/download/$(LINUX_TARBALL) -C $(OUT)
 	touch $@
 
 $(OUT)/.configured_stamp: $(OUT)/.unpacked_stamp
