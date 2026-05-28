@@ -2,9 +2,11 @@
 CPUS := $(shell nproc)
 OUT ?= out
 
-.PHONY: all
+.PHONY: all download-all
 
-all: $(OUT)/mnt linux systemd symlink coreutils disk
+all: $(OUT)/mnt download-all linux systemd symlink coreutils disk
+
+download-all: download-linux download-systemd download-coreutils 
 
 include build/linux.mk
 include build/systemd.mk
@@ -36,7 +38,8 @@ run:
 		-display none \
 		--enable-kvm
 $(OUT)/mnt:
-	mkdir -p $(OUT)/mnt/usr/lib64 $(OUT)/mnt/usr/lib/x86_64-linux-gnu
+	mkdir -p $(OUT)/mnt/usr/lib64 $(OUT)/mnt/usr/lib/x86_64-linux-gnu\
+		$(OUT)/download
 	cd $(OUT)/mnt ;\
 	 cp /lib64/ld-linux-x86-64.so.2 usr/lib64/;\
 	 cp /lib/x86_64-linux-gnu/libc.so.6 usr/lib/x86_64-linux-gnu/;\

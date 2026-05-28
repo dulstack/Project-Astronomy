@@ -3,7 +3,7 @@
 systemd: download-systemd systemd-untar systemd-build
 
 download-systemd:
-	cd $(OUT);\
+	cd $(OUT)/download;\
 	if [ ! -f v259.tar.gz ]; then \
 		wget https://github.com/systemd/systemd/archive/refs/tags/v259.tar.gz; \
 	fi
@@ -11,7 +11,7 @@ download-systemd:
 systemd-untar:
 	cd $(OUT);\
 	if [ ! -d systemd-259 ]; then \
-		tar -xvf v259.tar.gz; \
+		tar -xvf download/v259.tar.gz; \
 	fi
 
 systemd-build:
