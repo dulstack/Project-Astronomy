@@ -1,11 +1,14 @@
-.PHONY: package package-download package-untar package-configure package-build package-install
+# Sample package. Can be copied with a different name to add a new package.
+# After copying, replace everything here from 'package' to another package name.
+# Modify the variables below the line with .PHONY
+ 
+.PHONY: package download-package package-untar package-configure package-build package-install
 
-PACKAGE_NAME         = package
-PACKAGE_VERSION      = 1.0
-PACKAGE_TARBALL      = $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz
-PACKAGE_URL          = https://example.com/$(PACKAGE_TARBALL)
-PACKAGE_DIR          = package-$(PACKAGE_VERSION)
-PACKAGE_CONFIG_FLAGS = --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+package_VERSION      = 1.0
+package_TARBALL      = package-$(package_VERSION).tar.gz
+package_URL          = https://example.com/$(package_TARBALL)
+package_DIR          = package-$(package_VERSION)
+package_CONFIG_FLAGS = --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
 package: download-package package-untar package-configure package-build package-install
 
@@ -15,25 +18,25 @@ package-configure: $(OUT)/.configured_package_stamp
 package-build: $(OUT)/.built_package_stamp
 package-install: $(OUT)/.installed_package_stamp
 
-$(OUT)/.downloaded_$(PACKAGE_NAME)_stamp:
-	wget -O $(DOWNLOAD_DIR)/$(PACKAGE_TARBALL) $(PACKAGE_URL)
+$(OUT)/.downloaded_package_stamp:
+	wget -O $(DOWNLOAD_DIR)/$(package_TARBALL) $(package_URL)
 	touch $@
 
-$(OUT)/.unpacked_$(PACKAGE_NAME)_stamp: $(OUT)/.downloaded_$(PACKAGE_NAME)_stamp
-	tar -xf $(DOWNLOAD_DIR)/$(PACKAGE_TARBALL) -C $(OUT)
+$(OUT)/.unpacked_package_stamp: $(OUT)/.downloaded_package_stamp
+	tar -xf $(DOWNLOAD_DIR)/$(package_TARBALL) -C $(OUT)
 	touch $@
 
-$(OUT)/.configured_$(PACKAGE_NAME)_stamp: $(OUT)/.unpacked_$(PACKAGE_NAME)_stamp
-	mkdir -p $(OUT)/$(PACKAGE_DIR)/out
-	cd $(OUT)/$(PACKAGE_DIR)/out;\
-		../configure $(PACKAGE_CONFIG_FLAGS) 
+$(OUT)/.configured_package_stamp: $(OUT)/.unpacked_package_stamp
+	mkdir -p $(OUT)/$(package_DIR)/out
+	cd $(OUT)/$(package_DIR)/out;\
+		../configure $(package_CONFIG_FLAGS) 
 	touch $@
 
-$(OUT)/.built_$(PACKAGE_NAME)_stamp: $(OUT)/.configured_$(PACKAGE_NAME)_stamp
-	cd $(OUT)/$(PACKAGE_DIR)/out;\
+$(OUT)/.built_package_stamp: $(OUT)/.configured_package_stamp
+	cd $(OUT)/$(package_DIR)/out;\
 		make
 	touch $@
 
-$(OUT)/.installed_$(PACKAGE_NAME)_stamp: $(OUT)/.built_$(PACKAGE_NAME)_stamp
-	make -C $(OUT)/$(PACKAGE_DIR)/out install
+$(OUT)/.installed_package_stamp: $(OUT)/.built_package_stamp
+	make -C $(OUT)/$(package_DIR)/out install
 	touch $@
