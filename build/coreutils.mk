@@ -4,6 +4,7 @@ COREUTILS_VERSION ?= 9.11
 COREUTILS_TARBALL  = coreutils-$(COREUTILS_VERSION).tar.xz
 COREUTILS_URL      = https://ftp.gnu.org/gnu/coreutils/$(COREUTILS_TARBALL)
 COREUTILS          = coreutils-$(COREUTILS_VERSION)
+COREUTILS_FLAGS   ?= --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
 coreutils: download-coreutils coreutils-untar coreutils-configure coreutils-build coreutils-install
 
@@ -24,7 +25,7 @@ $(OUT)/.unpacked_coreutils_stamp: $(OUT)/.downloaded_coreutils_stamp
 $(OUT)/.configured_coreutils_stamp: $(OUT)/.unpacked_coreutils_stamp
 	mkdir -p $(OUT)/$(COREUTILS)/out
 	cd $(OUT)/$(COREUTILS)/out;\
-		../configure --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+		../configure $(COREUTILS_FLAGS)
 	touch $@
 
 $(OUT)/.built_coreutils_stamp: $(OUT)/.configured_coreutils_stamp

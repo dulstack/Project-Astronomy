@@ -1,9 +1,10 @@
 .PHONY: bash bash-download bash-untar bash-configure bash-build bash-install
 
-BASH_VERSION = 5.3
-BASH_TARBALL = bash-$(BASH_VERSION).tar.gz
-BASH_URL     = https://ftp.gnu.org/gnu/bash/$(BASH_TARBALL)
-BASH_DIR     = bash-$(BASH_VERSION)
+BASH_VERSION      = 5.3
+BASH_TARBALL      = bash-$(BASH_VERSION).tar.gz
+BASH_URL          = https://ftp.gnu.org/gnu/bash/$(BASH_TARBALL)
+BASH_DIR          = bash-$(BASH_VERSION)
+BASH_CONFIG_FLAGS = --with-gnu-malloc --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
 bash: download-bash bash-untar bash-configure bash-build bash-install
 
@@ -24,7 +25,7 @@ $(OUT)/.unpacked_bash_stamp: $(OUT)/.downloaded_bash_stamp
 $(OUT)/.configured_bash_stamp: $(OUT)/.unpacked_bash_stamp
 	mkdir -p $(OUT)/$(BASH_DIR)/out
 	cd $(OUT)/$(BASH_DIR)/out;\
-		../configure --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+		../configure $(BASH_CONFIG_FLAGS) 
 	touch $@
 
 $(OUT)/.built_bash_stamp: $(OUT)/.configured_bash_stamp
