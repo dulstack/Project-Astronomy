@@ -4,7 +4,7 @@ ncurses_VERSION      = 6.6
 ncurses_TARBALL      = ncurses-$(ncurses_VERSION).tar.gz
 ncurses_URL          = https://invisible-mirror.net/archives/ncurses/$(ncurses_TARBALL)
 ncurses_DIR          = ncurses-$(ncurses_VERSION)
-ncurses_CONFIG_FLAGS = --without-ada --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+ncurses_CONFIG_FLAGS = --with-shared --without-normal --without-debug --with-cxx-shared --without-ada --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
 ncurses: download-ncurses ncurses-untar ncurses-configure ncurses-build ncurses-install
 

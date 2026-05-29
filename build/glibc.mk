@@ -4,7 +4,7 @@ GLIBC_VERSION      = 2.43
 GLIBC_TARBALL      = glibc-$(GLIBC_VERSION).tar.xz
 GLIBC_URL          = https://ftp.gnu.org/gnu/glibc/$(GLIBC_TARBALL)
 GLIBC_DIR          = glibc-$(GLIBC_VERSION)
-GLIBC_CONFIG_FLAGS = --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+GLIBC_CONFIG_FLAGS = --enable-kernel=6.18 --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
 glibc: download-glibc glibc-untar glibc-configure glibc-build glibc-install
 
