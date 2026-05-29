@@ -15,17 +15,17 @@ configure-linux: $(OUT)/.configured_linux_stamp
 compile-linux:  $(OUT)/.compiled_linux_stamp
 
 $(OUT)/.downloaded_linux_stamp:
-	wget -O $(OUT)/download/$(LINUX_TARBALL) $(LINUX_LINK)
+	wget -O $(DOWNLOAD_DIR)/$(LINUX_TARBALL) $(LINUX_LINK)
 	touch $@
 
 $(OUT)/.unpacked_linux_stamp: $(OUT)/.downloaded_linux_stamp
-	tar -xf $(OUT)/download/$(LINUX_TARBALL) -C $(OUT)
+	tar -xf $(DOWNLOAD_DIR)/$(LINUX_TARBALL) -C $(OUT)
 	touch $@
 
 $(OUT)/.configured_linux_stamp: $(OUT)/.unpacked_linux_stamp
-	make -j$(CPUS) -C $(OUT)/$(LINUX) defconfig
+	make -C $(OUT)/$(LINUX) defconfig
 	touch $@
 
 $(OUT)/.compiled_linux_stamp: $(OUT)/.configured_linux_stamp
-	make -C $(OUT)/$(LINUX) -j$(CPUS) 2>&1 | tee $(OUT)/kernel-build.log
+	make -C $(OUT)/$(LINUX) 2>&1 | tee $(OUT)/kernel-build.log
 	touch $@
