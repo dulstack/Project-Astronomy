@@ -7,9 +7,9 @@ SUBMAKEFILES     = $(wildcard build/*.mk)
 PACKAGES         = $(SUBMAKEFILES:build/%.mk=%) 
 DOWNLOAD_TARGETS = $(PACKAGES:%=download-%)
 
-.PHONY: all download-all disk
+.PHONY: all download-all disk symlink
 
-all: $(ROOTFS) download-all $(PACKAGES) disk
+all: $(ROOTFS) symlink download-all $(PACKAGES) disk
 
 download-all: $(DOWNLOAD_TARGETS)
 
@@ -43,9 +43,10 @@ run:
 
 $(ROOTFS):
 	mkdir -p $(ROOTFS)/usr/lib64 $(ROOTFS)/usr/lib/x86_64-linux-gnu\
-		$(DOWNLOAD_DIR)
+		$(ROOTFS)/usr/bin $(ROOTFS)/usr/sbin $(ROOTFS)/usr/lib\
+	       	$(ROOTFS)/usr/lib64 $(DOWNLOAD_DIR)
 	# Missing shared objects that should be added later:
-	# ld-linux-x86-64.so.2 libc.so.6 libm.so.6 glibcrypt.so.1
+	# glibcrypt.so.1
 	# glibcrypto.so.3 glibz.so.1 glibzstd.so.1 glibselinux.so.1
 	# glibcap.so.2 glibpcre2-8.so.0 glibtinfo.so.6
 
