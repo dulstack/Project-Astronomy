@@ -1,4 +1,4 @@
-.PHONY: coreutils coreutils-download coreutils-untar coreutils-configure coreutils-build coreutils-install
+.PHONY: 4_coreutils coreutils-download coreutils-untar coreutils-configure coreutils-build coreutils-install
 
 COREUTILS_VERSION ?= 9.11
 COREUTILS_TARBALL  = coreutils-$(COREUTILS_VERSION).tar.xz
@@ -6,7 +6,7 @@ COREUTILS_URL      = https://ftp.gnu.org/gnu/coreutils/$(COREUTILS_TARBALL)
 COREUTILS          = coreutils-$(COREUTILS_VERSION)
 COREUTILS_FLAGS   ?= --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
-coreutils: download-coreutils coreutils-untar coreutils-configure coreutils-build coreutils-install
+4_coreutils: download-4_coreutils coreutils-untar coreutils-configure coreutils-build coreutils-install
 
 download-coreutils: $(OUT)/.downloaded_coreutils_stamp
 coreutils-untar: $(OUT)/.unpacked_coreutils_stamp

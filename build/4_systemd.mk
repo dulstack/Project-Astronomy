@@ -1,6 +1,6 @@
-.PHONY: systemd download-systemd systemd-untar systemd-build
+.PHONY: 4_systemd download-systemd systemd-untar systemd-build
 
-systemd: download-systemd systemd-untar systemd-build
+4_systemd: download-4_systemd systemd-untar systemd-build
 
 download-systemd:
 	cd $(DOWNLOAD_DIR);\

@@ -1,6 +1,9 @@
 # Sample package. Can be copied with a different name to add a new package.
 # After copying, replace everything here from 'package' to another package name.
-# Modify the variables below the line with .PHONY
+# Modify the variables below the line with .PHONY. Targets "package" and 
+# "download-package" should match the file name. For example:
+# file "file.mk" will have targets named "file" and "download-file", other can
+# have any name.
  
 .PHONY: package download-package package-untar package-configure package-build package-install
 

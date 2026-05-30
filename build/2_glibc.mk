@@ -1,4 +1,4 @@
-.PHONY: glibc download-glibc glibc-untar glibc-configure glibc-build glibc-install
+.PHONY: 2_glibc download-glibc glibc-untar glibc-configure glibc-build glibc-install
 
 GLIBC_VERSION      = 2.43
 GLIBC_TARBALL      = glibc-$(GLIBC_VERSION).tar.xz
@@ -6,9 +6,9 @@ GLIBC_URL          = https://ftp.gnu.org/gnu/glibc/$(GLIBC_TARBALL)
 GLIBC_DIR          = glibc-$(GLIBC_VERSION)
 GLIBC_CONFIG_FLAGS = --enable-kernel=6.18 --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
-glibc: download-glibc glibc-untar glibc-configure glibc-build glibc-install
+2_glibc: download-glibc glibc-untar glibc-configure glibc-build glibc-install
 
-download-glibc: $(OUT)/.downloaded_glibc_stamp
+download-2_glibc: $(OUT)/.downloaded_glibc_stamp
 glibc-untar: $(OUT)/.unpacked_glibc_stamp
 glibc-configure: $(OUT)/.configured_glibc_stamp
 glibc-build: $(OUT)/.built_glibc_stamp

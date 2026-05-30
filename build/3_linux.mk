@@ -1,4 +1,4 @@
-.PHONY: linux linux-nocompile download-linux untar-linux configure-linux compile-linux
+.PHONY: 3_linux linux-nocompile download-linux untar-linux configure-linux compile-linux
 
 LINUX_VERSION = 6.18.6
 LINUX         = linux-$(LINUX_VERSION)
@@ -6,10 +6,10 @@ LINUX_TARBALL = $(LINUX).tar.xz
 LINUX_LINK    = https://cdn.kernel.org/pub/linux/kernel/v6.x/$(LINUX_TARBALL)
 LINUX_BZIMAGE = $(OUT)/$(LINUX)/arch/x86_64/boot/bzImage
 
-linux: download-linux untar-linux configure-linux compile-linux
+3_linux: download-3_linux untar-linux configure-linux compile-linux
 
 
-download-linux: $(OUT)/.downloaded_linux_stamp
+download-3_linux: $(OUT)/.downloaded_linux_stamp
 untar-linux: $(OUT)/.unpacked_linux_stamp
 configure-linux: $(OUT)/.configured_linux_stamp
 compile-linux:  $(OUT)/.compiled_linux_stamp

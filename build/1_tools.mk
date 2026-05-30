@@ -1,4 +1,4 @@
-.PHONY: tools download-tools tools-build 
+.PHONY: 1_tools download-tools tools-build 
 
 TOOL_SUBMAKEFILES     = $(wildcard $(PWD)/build/tools/*.mk)
 TOOL_PACKAGES         = $(TOOL_SUBMAKEFILES:$(PWD)/build/tools/%.mk=%)
@@ -8,7 +8,7 @@ TOOLS_CFLAGS          = -O2
 
 include $(TOOL_SUBMAKEFILES)
 
-tools: download-tools tools-build
+1_tools: download-tools tools-build
 
-download-tools: $(TOOL_DOWNLOAD_TARGETS)
+download-1_tools: $(TOOL_DOWNLOAD_TARGETS)
 tools-build: $(TOOL_PACKAGES)

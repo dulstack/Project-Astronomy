@@ -1,4 +1,4 @@
-.PHONY: bash bash-download bash-untar bash-configure bash-build bash-install
+.PHONY: 5_bash bash-download bash-untar bash-configure bash-build bash-install
 
 BASH_VERSION      = 5.3
 BASH_TARBALL      = bash-$(BASH_VERSION).tar.gz
@@ -6,7 +6,7 @@ BASH_URL          = https://ftp.gnu.org/gnu/bash/$(BASH_TARBALL)
 BASH_DIR          = bash-$(BASH_VERSION)
 BASH_CONFIG_FLAGS = --with-curses --with-gnu-malloc --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
-bash: download-bash bash-untar bash-configure bash-build bash-install
+5_bash: download-5_bash bash-untar bash-configure bash-build bash-install
 
 download-bash: $(OUT)/.downloaded_bash_stamp
 bash-untar: $(OUT)/.unpacked_bash_stamp
