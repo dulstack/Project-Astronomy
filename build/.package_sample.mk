@@ -1,21 +1,24 @@
 # Sample package. Can be copied with a different name to add a new package.
 # After copying, replace everything here from 'package' to another package name.
-# Modify the variables below the line with .PHONY. Targets "package" and 
-# "download-package" should match the file name. For example:
-# file "file.mk" will have targets named "file" and "download-file", other can
-# have any name.
- 
-.PHONY: package download-package package-untar package-configure package-build package-install
+# Modify the variables below this line. Targets "package" and
+# "download-package" should match the file name of package, so make sure the
+# variable FILENAME is set correctly
 
+
+package_FILENAME     = ".package_sample.mk"
 package_VERSION      = 1.0
 package_TARBALL      = package-$(package_VERSION).tar.gz
 package_URL          = https://example.com/$(package_TARBALL)
 package_DIR          = package-$(package_VERSION)
-package_CONFIG_FLAGS = --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+package_CONFIG_FLAGS = --prefix=/$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
-package: download-package package-untar package-configure package-build package-install
+#Alias for target
+.PHONY: package $(package_FILENAME) download-$(package_FILENAME) package-untar package-configure package-build package-install
+package: $(package_FILENAME)
 
-download-package: $(OUT)/.downloaded_package_stamp
+$(package_FILENAME): download-$(package_FILENAME) package-untar package-configure package-build package-install
+
+download-$(package_FILENAME): $(OUT)/.downloaded_package_stamp
 package-untar: $(OUT)/.unpacked_package_stamp
 package-configure: $(OUT)/.configured_package_stamp
 package-build: $(OUT)/.built_package_stamp
