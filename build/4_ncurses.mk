@@ -1,4 +1,4 @@
-.PHONY: 4_ncurses download-ncurses ncurses-untar ncurses-configure ncurses-build ncurses-install
+.PHONY: 4_ncurses download-4_ncurses ncurses-untar ncurses-configure ncurses-build ncurses-install
 
 ncurses_VERSION      = 6.6
 ncurses_TARBALL      = ncurses-$(ncurses_VERSION).tar.gz
@@ -8,7 +8,7 @@ ncurses_CONFIG_FLAGS = --with-shared --without-normal --without-debug --with-cxx
 
 4_ncurses: download-4_ncurses ncurses-untar ncurses-configure ncurses-build ncurses-install
 
-download-ncurses: $(OUT)/.downloaded_ncurses_stamp
+download-4_ncurses: $(OUT)/.downloaded_ncurses_stamp
 ncurses-untar: $(OUT)/.unpacked_ncurses_stamp
 ncurses-configure: $(OUT)/.configured_ncurses_stamp
 ncurses-build: $(OUT)/.built_ncurses_stamp

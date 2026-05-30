@@ -1,4 +1,4 @@
-.PHONY: 3_linux linux-nocompile download-linux untar-linux configure-linux compile-linux
+.PHONY: 3_linux linux-nocompile download-3_linux untar-linux configure-linux compile-linux
 
 LINUX_VERSION = 6.18.6
 LINUX         = linux-$(LINUX_VERSION)

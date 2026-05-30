@@ -7,15 +7,16 @@ SUBMAKEFILES     = $(wildcard build/*.mk)
 PACKAGES         = $(SUBMAKEFILES:build/%.mk=%) 
 DOWNLOAD_TARGETS = $(PACKAGES:%=download-%)
 
-.PHONY: all download-all disk symlink
+.PHONY: all download-all disk symlink packages
 
-all: $(ROOTFS) symlink download-all $(PACKAGES) disk
+all: $(ROOTFS) symlink download-all disk
 
-download-all: $(DOWNLOAD_TARGETS)
+download-all: $(DOWNLOAD_TARGETS) | $(ROOTFS)
+packages: $(PACKAGES) | $(DOWNLOAD_TARGETS)
 
 include $(SUBMAKEFILES)
 
-symlink:
+symlink: $(ROOTFS)
 	cd $(ROOTFS);\
 	 ln -sf usr/bin bin;\
 	 ln -sf usr/sbin sbin;\
@@ -24,7 +25,7 @@ symlink:
 
 RAMDISK = $(OUT)/initrd.cpio.gz
 
-disk: $(RAMDISK)
+disk: $(RAMDISK) | $(PACKAGES)
 
 $(RAMDISK): $(ROOTFS)
 	cd $(ROOTFS);\

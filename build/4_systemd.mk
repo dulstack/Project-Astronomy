@@ -2,7 +2,7 @@
 
 4_systemd: download-4_systemd systemd-untar systemd-build
 
-download-systemd:
+download-4_systemd:
 	cd $(DOWNLOAD_DIR);\
 	if [ ! -f v259.tar.gz ]; then \
 		wget https://github.com/systemd/systemd/archive/refs/tags/v259.tar.gz; \
