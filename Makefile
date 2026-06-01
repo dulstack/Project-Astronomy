@@ -1,11 +1,12 @@
-CPUS            := $(shell nproc)
-CFLAGS          ?= -O2
-OUT             ?= out
-ROOTFS          ?= $(OUT)/mnt
-DOWNLOAD_DIR    ?= $(OUT)/download
-SUBMAKEFILES     = $(wildcard build/*.mk)
-PACKAGES         = $(SUBMAKEFILES:build/%.mk=%) 
-DOWNLOAD_TARGETS = $(PACKAGES:%=download-%)
+CPUS               := $(shell nproc)
+CFLAGS             ?= -O2
+OUT                ?= out
+ROOTFS             ?= $(OUT)/mnt
+DOWNLOAD_DIR       ?= $(OUT)/download
+SUBMAKEFILES        = $(wildcard build/*.mk)
+PACKAGES            = $(SUBMAKEFILES:build/%.mk=%) 
+DOWNLOAD_TARGETS    = $(PACKAGES:%=download-%)
+COMMON_CONFIG_FLAGS = CC=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-gcc CXX=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-g++ CPP=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-cpp
 
 .PHONY: all download-all disk symlink packages
 

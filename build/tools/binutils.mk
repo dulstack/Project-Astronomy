@@ -4,7 +4,7 @@ binutils_VERSION      = 2.44.90
 binutils_TARBALL      = binutils-$(binutils_VERSION).tar.xz
 binutils_URL          = https://sourceware.org/pub/binutils/snapshots/$(binutils_TARBALL)
 binutils_DIR          = binutils-$(binutils_VERSION)
-binutils_CONFIG_FLAGS = --target=x86_64-linux-gnu --prefix=$(PWD)/$(TOOLS_ROOT) CFLAGS="$(TOOLS_CFLAGS)"
+binutils_CONFIG_FLAGS = --target=x86_64-linux-gnu --prefix=/$(PWD)/$(TOOLS_ROOT) CFLAGS="$(TOOLS_CFLAGS)"
 
 binutils: download-binutils binutils-untar binutils-configure binutils-build binutils-install
 
