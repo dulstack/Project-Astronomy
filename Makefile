@@ -41,8 +41,8 @@ run:
 		-append "LD_LIBRARY_PATH="/lib:/lib64:/lib/x86_64-linux-gnu" rdinit=/bin/bash console=ttyS0 raid=noautodetect" \
 		-m 1G \
 		-serial stdio \
+		-display none \
 		--enable-kvm
-		#-display none \
 
 $(ROOTFS):
 	mkdir -p $(ROOTFS)/usr/lib64 $(ROOTFS)/usr/lib/x86_64-linux-gnu\
@@ -50,6 +50,6 @@ $(ROOTFS):
 	       	$(ROOTFS)/usr/lib64 $(DOWNLOAD_DIR)
 	# Missing shared objects that should be added later:
 	# libcrypt.so.1
-	# libcrypto.so.3 libz.so.1 libzstd.so.1 libselinux.so.1
-	# libcap.so.2 libpcre2-8.so.0 libtinfo.so.6
+	# libcrypto.so.3 libz.so.1 libzstd.so.1 
+	# libcap.so.2
 
