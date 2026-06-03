@@ -35,7 +35,5 @@ $(OUT)/.built_ncurses_stamp: $(OUT)/.configured_ncurses_stamp
 
 $(OUT)/.installed_ncurses_stamp: $(OUT)/.built_ncurses_stamp
 	make -C $(OUT)/$(ncurses_DIR)/out install
-	ln -sv libncursesw.so $(PWD)/$(ROOTFS)/usr/lib/libncurses.so
-	sed -e 's/^#if.*XOPEN.*$/#if 1/' \
-	 -i $(PWD)/$(ROOTFS)/usr/include/curses.h
+	#ln -sv libncursesw.so $(PWD)/$(ROOTFS)/usr/lib/libncurses.so
 	touch $@

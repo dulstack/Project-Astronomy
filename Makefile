@@ -9,7 +9,7 @@ DOWNLOAD_TARGETS    = $(PACKAGES:%=download-%)
 COMMON_CONFIG_FLAGS = LIBRARY_PATH="$(PWD)/$(ROOTFS)/usr/lib:$(PWD)/$(ROOTFS)/usr/lib64:$(PWD)/$(ROOTFS)/usr/lib/x86_64-linux-gnu/" CC=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-gcc CXX=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-g++ CPP=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-cpp
 
 .PHONY: all download-all disk symlink packages
-.NOTPARALLEL: all
+.NOTPARALLEL: all download-all packages disk
 
 all: $(ROOTFS) symlink download-all packages disk
 
@@ -27,7 +27,7 @@ symlink: $(ROOTFS)
 
 RAMDISK = $(OUT)/initrd.cpio.gz
 
-disk: $(RAMDISK) #| $(PACKAGES)
+disk: $(RAMDISK) | $(PACKAGES)
 
 $(RAMDISK): $(ROOTFS)
 	cd $(ROOTFS);\

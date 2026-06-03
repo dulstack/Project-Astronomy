@@ -3,19 +3,25 @@ SYSTEMD_FLAGS=--prefix=$(PWD)/$(ROOTFS)/usr --buildtype=release -D default-dnsse
 
 4_systemd: download-4_systemd systemd-untar systemd-build
 
-download-4_systemd:
+download-4_systemd: $(OUT)/.downloaded_systemd_stamp
+systemd-untar: $(OUT)/.unpacked_systemd_stamp
+systemd-build: $(OUT)/.built_systemd_stamp
+
+$(OUT)/.downloaded_systemd_stamp:
 	cd $(DOWNLOAD_DIR);\
 	if [ ! -f v259.tar.gz ]; then \
 		wget https://github.com/systemd/systemd/archive/refs/tags/v259.tar.gz; \
 	fi
+	touch $@
 
-systemd-untar:
+$(OUT)/.unpacked_systemd_stamp:
 	cd $(OUT);\
 	if [ ! -d systemd-259 ]; then \
 		tar -xvf download/v259.tar.gz; \
 	fi
+	touch $@
 
-systemd-build:
+$(OUT)/.built_systemd_stamp:
 	mkdir -p $(OUT)/systemd-259/build
 	cd $(OUT)/systemd-259/build;\
 	 sed -e 's/GROUP="render"/GROUP="video"/' \
@@ -25,5 +31,6 @@ systemd-build:
 	 ninja;\
 	 DESTDIR=$(PWD)/$(ROOTFS) ninja install
 	echo 'NAME="Celestial"'>$(PWD)/$(ROOTFS)/os-release
+	touch $@
 
 
