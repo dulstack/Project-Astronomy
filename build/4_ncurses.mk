@@ -4,7 +4,7 @@ ncurses_VERSION      = 6.6
 ncurses_TARBALL      = ncurses-$(ncurses_VERSION).tar.gz
 ncurses_URL          = https://invisible-mirror.net/archives/ncurses/$(ncurses_TARBALL)
 ncurses_DIR          = ncurses-$(ncurses_VERSION)
-ncurses_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --with-shared --without-normal --without-debug --with-cxx-shared --without-ada --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+ncurses_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --with-termlib --with-manpage-format=normal --with-shared --without-normal --disable-stripping --without-debug --with-cxx-shared --without-ada --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
 4_ncurses: download-4_ncurses ncurses-untar ncurses-configure ncurses-build ncurses-install
 
@@ -35,4 +35,7 @@ $(OUT)/.built_ncurses_stamp: $(OUT)/.configured_ncurses_stamp
 
 $(OUT)/.installed_ncurses_stamp: $(OUT)/.built_ncurses_stamp
 	make -C $(OUT)/$(ncurses_DIR)/out install
+	ln -sv libncursesw.so $(PWD)/$(ROOTFS)/usr/lib/libncurses.so
+	sed -e 's/^#if.*XOPEN.*$/#if 1/' \
+	 -i $(PWD)/$(ROOTFS)/usr/include/curses.h
 	touch $@

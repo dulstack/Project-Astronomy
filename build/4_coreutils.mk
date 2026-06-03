@@ -4,7 +4,7 @@ COREUTILS_VERSION ?= 9.11
 COREUTILS_TARBALL  = coreutils-$(COREUTILS_VERSION).tar.xz
 COREUTILS_URL      = https://ftp.gnu.org/gnu/coreutils/$(COREUTILS_TARBALL)
 COREUTILS          = coreutils-$(COREUTILS_VERSION)
-COREUTILS_FLAGS   ?= $(COMMON_CONFIG_FLAGS) --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+COREUTILS_FLAGS   ?= $(COMMON_CONFIG_FLAGS) --build=$(shell $(OUT)/$(COREUTILS)/build-aux/config.guess) --enable-install-program=hostname --enable-no-install-program=kill,uptime --host=x86_64-linux-gnu --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
 4_coreutils: download-4_coreutils coreutils-untar coreutils-configure coreutils-build coreutils-install
 
@@ -35,4 +35,6 @@ $(OUT)/.built_coreutils_stamp: $(OUT)/.configured_coreutils_stamp
 
 $(OUT)/.installed_coreutils_stamp: $(OUT)/.built_coreutils_stamp
 	make -C $(OUT)/$(COREUTILS)/out install
+	mv -v $(PWD)/$(ROOTFS)/usr/bin/chroot $(PWD)/$(ROOTFS)/usr/sbin
+	mkdir -pv $(PWD)/$(ROOTFS)/usr/share/man/man8
 	touch $@

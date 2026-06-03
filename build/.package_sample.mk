@@ -10,7 +10,7 @@ package_VERSION      = 1.0
 package_TARBALL      = package-$(package_VERSION).tar.gz
 package_URL          = https://example.com/$(package_TARBALL)
 package_DIR          = package-$(package_VERSION)
-package_CONFIG_FLAGS = --prefix=/$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+package_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
 
 #Alias for target
 .PHONY: package $(package_FILENAME) download-$(package_FILENAME) package-untar package-configure package-build package-install
