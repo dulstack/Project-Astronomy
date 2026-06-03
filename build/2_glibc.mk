@@ -35,4 +35,5 @@ $(OUT)/.built_glibc_stamp: $(OUT)/.configured_glibc_stamp
 
 $(OUT)/.installed_glibc_stamp: $(OUT)/.built_glibc_stamp
 	make -C $(OUT)/$(GLIBC_DIR)/out install
+	mv $(ROOTFS)/lib/ld-linux-x86-64.so.2 $(ROOTFS)/lib64/ld-linux-x86-64.so.2
 	touch $@
