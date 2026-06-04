@@ -1,7 +1,11 @@
 CPUS               := $(shell nproc)
 CFLAGS             ?= -O2
+LD_FLAGS	   ?=
 OUT                ?= out
 ROOTFS             ?= $(OUT)/mnt
+CFLAGS		   += -I $(PWD)/$(ROOTFS)/usr/include
+LDFLAGS		   += -L/$(PWD)/$(ROOTFS)/usr/lib
+LDFLAGS		   += -L/$(PWD)/$(ROOTFS)/usr/lib/x86_64-linux-gnu
 DOWNLOAD_DIR       ?= $(OUT)/download
 SUBMAKEFILES        = $(wildcard build/*.mk)
 PACKAGES            = $(SUBMAKEFILES:build/%.mk=%) 
@@ -49,7 +53,5 @@ $(ROOTFS):
 		$(ROOTFS)/usr/bin $(ROOTFS)/usr/sbin $(ROOTFS)/usr/lib\
 	       	$(ROOTFS)/usr/lib64 $(DOWNLOAD_DIR)
 	# Missing shared objects that should be added later:
-	# libcrypt.so.1
-	# libcrypto.so.3 libz.so.1 libzstd.so.1 
-	# libcap.so.2
+	# libz.so.1 libzstd.so.1 
 
