@@ -2,7 +2,7 @@ openssl_VERSION      = 3.5.6
 openssl_TARBALL      = openssl-$(openssl_VERSION).tar.gz
 openssl_URL          = https://github.com/openssl/openssl/releases/download/openssl-$(openssl_VERSION)/$(openssl_TARBALL)
 openssl_DIR          = openssl-$(openssl_VERSION)
-openssl_CONFIG_FLAGS = --openssldir=/$(PWD)/$(ROOTFS)/etc/ssl --libdir=lib shared zlib-dynamic $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS)/usr CFLAGS="$(CFLAGS)"
+openssl_CONFIG_FLAGS = --openssldir=/$(PWD)/$(ROOTFS)/etc/ssl --libdir=lib shared zlib-dynamic $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS)/usr
 
 #Alias for target
 .PHONY: openssl 5_openssl download-5_openssl openssl-untar openssl-configure openssl-build openssl-install

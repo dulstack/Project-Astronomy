@@ -4,7 +4,7 @@ COREUTILS_VERSION ?= 9.11
 COREUTILS_TARBALL  = coreutils-$(COREUTILS_VERSION).tar.xz
 COREUTILS_URL      = https://ftp.gnu.org/gnu/coreutils/$(COREUTILS_TARBALL)
 COREUTILS          = coreutils-$(COREUTILS_VERSION)
-COREUTILS_FLAGS   ?= $(COMMON_CONFIG_FLAGS) --build=$(shell $(OUT)/$(COREUTILS)/build-aux/config.guess) --enable-install-program=hostname --enable-no-install-program=kill,uptime --host=x86_64-linux-gnu --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+COREUTILS_FLAGS   ?= $(COMMON_CONFIG_FLAGS) --build=$(shell $(OUT)/$(COREUTILS)/build-aux/config.guess) --enable-install-program=hostname --enable-no-install-program=kill,uptime --host=x86_64-linux-gnu --prefix=$(PWD)/$(ROOTFS)
 
 4_coreutils: download-4_coreutils coreutils-untar coreutils-configure coreutils-build coreutils-install
 

@@ -2,7 +2,7 @@ libxcrypt_VERSION      = 4.5.2
 libxcrypt_TARBALL      = libxcrypt-$(libxcrypt_VERSION).tar.xz
 libxcrypt_URL          = https://github.com/besser82/libxcrypt/releases/download/v$(libxcrypt_VERSION)/$(libxcrypt_TARBALL)
 libxcrypt_DIR          = libxcrypt-$(libxcrypt_VERSION)
-libxcrypt_CONFIG_FLAGS = --disable-static --enable-hashes=strong,glibc --disable-failure-tokens --enable-obsolete-api=glibc $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+libxcrypt_CONFIG_FLAGS = --disable-static --enable-hashes=strong,glibc --disable-failure-tokens --enable-obsolete-api=glibc $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS)
 
 .PHONY: libxcrypt 5_libxcrypt download-5_libxcrypt libxcrypt-untar libxcrypt-configure libxcrypt-build libxcrypt-install
 libxcrypt: 5_libxcrypt

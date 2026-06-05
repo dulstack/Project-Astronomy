@@ -2,7 +2,7 @@ libcap_VERSION      = 2.78
 libcap_TARBALL      = libcap-$(libcap_VERSION).tar.gz
 libcap_URL          = https://git.kernel.org/pub/scm/libs/libcap/libcap.git/snapshot/$(libcap_TARBALL)
 libcap_DIR          = libcap-$(libcap_VERSION)
-libcap_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+libcap_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS)
 
 #Alias for target
 .PHONY: libcap 5_libcap download-5_libcap libcap-untar libcap-configure libcap-build libcap-install

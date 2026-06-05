@@ -2,7 +2,7 @@ libselinux_VERSION      = 3.10
 libselinux_TARBALL      = libselinux-$(libselinux_VERSION).tar.gz
 libselinux_URL          = https://github.com/SELinuxProject/selinux/releases/download/$(libselinux_VERSION)/$(libselinux_TARBALL)
 libselinux_DIR          = libselinux-$(libselinux_VERSION)
-libselinux_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+libselinux_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS)
 
 #Alias for target
 .PHONY: libselinux 5_libselinux download-5_libselinux libselinux-untar libselinux-configure libselinux-build libselinux-install

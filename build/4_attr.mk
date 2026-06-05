@@ -2,7 +2,7 @@ attr_VERSION      = 2.5.2
 attr_TARBALL      = attr-$(attr_VERSION).tar.xz
 attr_URL          = https://download-mirror.savannah.gnu.org/releases/attr/$(attr_TARBALL)
 attr_DIR          = attr-$(attr_VERSION)
-attr_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --disable-static --prefix=/$(PWD)/$(ROOTFS)/usr --sysconfdir=/$(PWD)/$(ROOTFS)/etc CFLAGS="$(CFLAGS)"
+attr_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --disable-static --prefix=/$(PWD)/$(ROOTFS)/usr --sysconfdir=/$(PWD)/$(ROOTFS)/etc
 
 #Alias for target
 .PHONY: attr 4_attr download-4_attr attr-untar attr-configure attr-build attr-install

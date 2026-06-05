@@ -4,7 +4,7 @@ BASH_VERSION      = 5.3
 BASH_TARBALL      = bash-$(BASH_VERSION).tar.gz
 BASH_URL          = https://ftp.gnu.org/gnu/bash/$(BASH_TARBALL)
 BASH_DIR          = bash-$(BASH_VERSION)
-BASH_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --without-bash-malloc --host=x86_64-linux-gnu --build=$(shell $(OUT)/$(BASH_DIR)/support/config.guess) --prefix=$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+BASH_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --without-bash-malloc --host=x86_64-linux-gnu --build=$(shell $(OUT)/$(BASH_DIR)/support/config.guess) --prefix=$(PWD)/$(ROOTFS)
 
 5_bash: download-5_bash bash-untar bash-configure bash-build bash-install
 

@@ -2,7 +2,7 @@ readline_VERSION      = 8.3
 readline_TARBALL      = readline-$(readline_VERSION).tar.gz
 readline_URL          = https://mirrors.liquidweb.com/gnu/readline/$(readline_TARBALL)
 readline_DIR          = readline-$(readline_VERSION)
-readline_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS)/usr/ CFLAGS="$(CFLAGS)" --with-curses --disable-static
+readline_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS)/usr/ --with-curses --disable-static
 readline_MAKE_FLAGS  = SHLIB_LIBS="-lncursesw"
 
 #Alias for target

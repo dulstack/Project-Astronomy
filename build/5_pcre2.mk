@@ -9,7 +9,7 @@ pcre2_VERSION      = 10.47
 pcre2_TARBALL      = pcre2-$(pcre2_VERSION).tar.gz
 pcre2_URL          = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-$(pcre2_VERSION)/$(pcre2_TARBALL)
 pcre2_DIR          = pcre2-$(pcre2_VERSION)
-pcre2_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS) CFLAGS="$(CFLAGS)"
+pcre2_CONFIG_FLAGS = $(COMMON_CONFIG_FLAGS) --prefix=/$(PWD)/$(ROOTFS)
 
 #Alias for target
 .PHONY: pcre2 5_pcre2 download-5_pcre2 pcre2-untar pcre2-configure pcre2-build pcre2-install
