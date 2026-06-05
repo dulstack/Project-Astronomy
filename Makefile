@@ -10,7 +10,8 @@ DOWNLOAD_DIR       ?= $(OUT)/download
 SUBMAKEFILES        = $(wildcard build/*.mk)
 PACKAGES            = $(SUBMAKEFILES:build/%.mk=%) 
 DOWNLOAD_TARGETS    = $(PACKAGES:%=download-%)
-COMMON_CONFIG_FLAGS = LIBRARY_PATH="$(PWD)/$(ROOTFS)/usr/lib:$(PWD)/$(ROOTFS)/usr/lib64:$(PWD)/$(ROOTFS)/usr/lib/x86_64-linux-gnu/" CC=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-gcc CXX=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-g++ CPP=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-cpp CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)"
+LIBRARY_PATH 	   ?= $(PWD)/$(ROOTFS)/usr/lib:$(PWD)/$(ROOTFS)/usr/lib64:$(PWD)/$(ROOTFS)/usr/lib/x86_64-linux-gnu/
+COMMON_CONFIG_FLAGS = LIBRARY_PATH="$(LIBRARY_PATH)" CXX=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-g++ CPP=$(PWD)/$(TOOLS_ROOT)/bin/x86_64-linux-gnu-cpp CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)"
 
 .PHONY: all download-all disk symlink packages
 .NOTPARALLEL: all download-all packages disk
