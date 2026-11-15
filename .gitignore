@@ -1,10 +1,4 @@
-# Linux
-linux-*
-linux-*.tar.xz
-
-# OpenRC
-0.63.tar.gz
-openrc-0.63
-
-# rootfs
-rootfs.img
+custom/config/
+menu/__pycache__/
+pkgmngt/packInstall.sh
+pkgmngt/packageManager.xml
